@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764005798941",
+    "project_id": "nyeloginsignupapp175173",
+    "storage_bucket": "nyeloginsignupapp175173.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764005798941:android:12622d489dbb4cf1e022f4",
+        "android_client_info": {
+          "package_name": "com.example.nye_175_173_login_signup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn4_W_tSQfGPjhysLvWDxgEZyyjnYc4BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
