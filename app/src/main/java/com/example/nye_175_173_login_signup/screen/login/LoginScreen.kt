@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nye_175_173_login_signup.viewmodel.AuthViewModel
+import androidx.compose.ui.graphics.Color
+
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -38,7 +40,7 @@ fun LoginScreen(navController: NavController) {
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text("Username") },
+                label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -80,6 +82,10 @@ fun LoginScreen(navController: NavController) {
                             }
                         }
                     },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF4C1159),  // Purple background
+                    contentColor = Color.White           // White text
+                ),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Login")

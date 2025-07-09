@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -112,6 +113,10 @@ fun SignupScreen(navController: NavController) {
                     }
                 }
             },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF4C1159),  // Purple background
+                contentColor = Color.White           // White text
+            ),
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Sign Up")
