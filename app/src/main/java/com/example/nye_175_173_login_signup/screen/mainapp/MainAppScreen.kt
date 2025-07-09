@@ -19,6 +19,7 @@ fun MainAppScreen(navController: NavController) {
             Text(
                 text = "Welcome to Main App!",
                 style = MaterialTheme.typography.headlineMedium
+
             )
 
             Spacer(modifier = Modifier.height(16.dp))
