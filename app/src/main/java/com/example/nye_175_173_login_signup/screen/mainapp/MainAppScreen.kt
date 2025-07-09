@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -29,7 +30,12 @@ fun MainAppScreen(navController: NavController) {
                 navController.navigate("login") {
                     popUpTo("mainapp") { inclusive = true }
                 }
-            }) {
+            },colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF4C1159),  // Purple background
+                contentColor = Color.White           // White text
+            ),)
+
+            {
                 Text("Logout")
             }
         }
