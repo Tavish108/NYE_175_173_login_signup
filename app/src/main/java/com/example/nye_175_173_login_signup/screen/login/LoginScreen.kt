@@ -19,14 +19,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import com.example.nye_175_173_login_signup.R
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavController) {
-
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     val viewModel: AuthViewModel = viewModel()
     val context = LocalContext.current
+    val message by viewModel.message.collectAsState()
+    val token by viewModel.token.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(message) {
+        message?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            if (it.contains("Login successful", ignoreCase = true)) {
+                navController.navigate("mainapp") {
+                    popUpTo("login") { inclusive = true }
+                }
+            }
+            viewModel.clearMessages()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -34,23 +51,18 @@ fun LoginScreen(navController: NavController) {
             .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Top Background Image (resized)
         Image(
             painter = painterResource(id = R.drawable.login_img),
             contentDescription = "Login Top Banner",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp), // Resize height here
+                .height(200.dp),
             contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(
-            "Login",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color(0xFF4C1159)
-        )
+        Text("Login", style = MaterialTheme.typography.headlineMedium, color = Color(0xFF4C1159))
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -78,23 +90,7 @@ fun LoginScreen(navController: NavController) {
                 if (username.isBlank() || password.isBlank()) {
                     Toast.makeText(context, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 } else {
-                    viewModel.login(
-                        email = username.trim(),
-                        password = password.trim()
-                    ) { success, errorMessage ->
-                        if (success) {
-                            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                            navController.navigate("mainapp") {
-                                popUpTo("login") { inclusive = true }
-                            }
-                        } else {
-                            Toast.makeText(
-                                context,
-                                errorMessage ?: "Login failed",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+                    viewModel.login(email = username.trim(), password = password.trim())
                 }
             },
             colors = ButtonDefaults.buttonColors(
@@ -113,9 +109,7 @@ fun LoginScreen(navController: NavController) {
             textAlign = TextAlign.Center,
             color = Color(0xFF4C1159),
             modifier = Modifier
-                .clickable {
-                    navController.navigate("signup")
-                }
+                .clickable { navController.navigate("signup") }
                 .padding(8.dp),
             style = MaterialTheme.typography.bodySmall
         )

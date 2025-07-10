@@ -13,18 +13,31 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.nye_175_173_login_signup.viewmodel.AuthViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SignupScreen(navController: NavController) {
     val context = LocalContext.current
     val viewModel: AuthViewModel = viewModel()
 
-    var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
+
+    val message by viewModel.message.collectAsState()
+
+    LaunchedEffect(message) {
+        message?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            if (it.contains("Signup successful", ignoreCase = true)) {
+                navController.navigate("login") {
+                    popUpTo("signup") { inclusive = true }
+                }
+            }
+            viewModel.clearMessages()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -37,27 +50,9 @@ fun SignupScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Username") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Phone Number") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -90,32 +85,18 @@ fun SignupScreen(navController: NavController) {
 
         Button(
             onClick = {
-                if (email.isBlank() || password.isBlank() || confirmPassword.isBlank() || phone.isBlank() || username.isBlank()) {
+                if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                     error = "Please fill in all fields"
                 } else if (password != confirmPassword) {
                     error = "Passwords do not match"
                 } else {
                     error = null
-                    viewModel.register(
-                        email = email.trim(),
-                        password = password.trim(),
-                        phone = phone.trim(),
-                        username = username.trim()
-                    ) { success, errorMessage ->
-                        if (success) {
-                            Toast.makeText(context, "Signup successful! Please login.", Toast.LENGTH_SHORT).show()
-                            navController.navigate("login") {
-                                popUpTo("signup") { inclusive = true }
-                            }
-                        } else {
-                            error = errorMessage
-                        }
-                    }
+                    viewModel.signup(email.trim(), password.trim())
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4C1159),  // Purple background
-                contentColor = Color.White           // White text
+                containerColor = Color(0xFF4C1159),
+                contentColor = Color.White
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
