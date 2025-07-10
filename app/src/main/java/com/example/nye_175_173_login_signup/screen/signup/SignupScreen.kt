@@ -1,4 +1,6 @@
 package com.example.nye_175_173_login_signup.screen.signup
+import androidx.compose.ui.res.stringResource
+
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -8,12 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.nye_175_173_login_signup.R
 import com.example.nye_175_173_login_signup.viewmodel.AuthViewModel
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SignupScreen(navController: NavController) {
@@ -45,14 +48,14 @@ fun SignupScreen(navController: NavController) {
             .padding(32.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Create Account", style = MaterialTheme.typography.headlineMedium)
+        Text(text = stringResource(R.string.signup_title), style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.email)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -61,7 +64,7 @@ fun SignupScreen(navController: NavController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.password)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
@@ -71,7 +74,7 @@ fun SignupScreen(navController: NavController) {
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text("Confirm Password") },
+            label = { Text(stringResource(R.string.confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
@@ -85,13 +88,15 @@ fun SignupScreen(navController: NavController) {
 
         Button(
             onClick = {
-                if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-                    error = "Please fill in all fields"
-                } else if (password != confirmPassword) {
-                    error = "Passwords do not match"
-                } else {
-                    error = null
-                    viewModel.signup(email.trim(), password.trim())
+                error = when {
+                    email.isBlank() || password.isBlank() || confirmPassword.isBlank() ->
+                        context.getString(R.string.please_fill_all_fields)
+                    password != confirmPassword ->
+                        context.getString(R.string.passwords_do_not_match)
+                    else -> {
+                        viewModel.signup(email.trim(), password.trim())
+                        null
+                    }
                 }
             },
             colors = ButtonDefaults.buttonColors(
@@ -100,13 +105,13 @@ fun SignupScreen(navController: NavController) {
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Sign Up")
+            Text(stringResource(R.string.signup_button))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Already have an account? Login",
+            text = stringResource(R.string.login_link),
             modifier = Modifier
                 .clickable {
                     navController.navigate("login") {
