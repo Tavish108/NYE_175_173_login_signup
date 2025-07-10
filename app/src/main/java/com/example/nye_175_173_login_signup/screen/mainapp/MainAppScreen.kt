@@ -23,6 +23,7 @@ import com.example.nye_175_173_login_signup.R
 import com.example.nye_175_173_login_signup.util.LocaleUtils
 
 
+@ExperimentalMaterial3Api
 @Composable
 fun MainAppScreen(navController: NavController) {
     val context = LocalContext.current
