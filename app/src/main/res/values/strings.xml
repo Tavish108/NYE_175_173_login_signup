@@ -1,3 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NYE_175_173_login_signup</string>
+    <string name="app_name">Login App</string>
+
+    <!-- Login screen -->
+
+    <string name="login_title">Login</string>
+    <string name="login_button">Login</string>
+    <string name="signup_link">Don\'t have an account? Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter_all_fields">Please fill all fields</string>
+    <string name="login_image_desc">Login banner</string>
+
+    <!-- Signup screen -->
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="login_link">Already have an account? Login</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="please_fill_all_fields">Please fill all fields</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
 </resources>

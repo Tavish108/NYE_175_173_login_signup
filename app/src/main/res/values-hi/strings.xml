@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">लॉगिन ऐप</string>
+
+    <!-- Login screen -->
+    <string name="login_title">लॉगिन</string>
+    <string name="login_button">लॉग इन</string>
+    <string name="signup_link">खाता नहीं है? साइन अप करें</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="enter_all_fields">कृपया सभी फ़ील्ड भरें</string>
+    <string name="login_image_desc">लॉगिन बैनर</string>
+
+    <!-- Signup screen -->
+    <string name="signup_title">साइन अप</string>
+    <string name="signup_button">साइन अप</string>
+    <string name="login_link">पहले से खाता है? लॉगिन करें</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि करें</string>
+    <string name="please_fill_all_fields">कृपया सभी फ़ील्ड भरें</string>
+    <string name="passwords_do_not_match">पासवर्ड मेल नहीं खा रहे हैं</string>
+</resources>
